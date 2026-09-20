@@ -1,0 +1,9 @@
+{
+  "name": "Bungalow 69 Clifton",
+  "short_name": "Bungalow 69",
+  "description": "Private beach villa in Clifton, Cape Town.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F0E8",
+  "theme_color": "#F5F0E8"
+}

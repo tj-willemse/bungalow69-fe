@@ -1,0 +1,80 @@
+@config "../tailwind.config.js";
+@import "tailwindcss";
+
+@theme {
+  --color-brand-sand: #a58868;
+  --color-brand-umber: #6b513b;
+  --color-brand-espresso: #342a23;
+  --color-brand-cream: #f5f0e8;
+  --color-brand-ivory: #fcfaf6;
+  --color-brand-oyster: #ded3c5;
+  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-manrope);
+}
+
+:root {
+  color-scheme: light;
+  background: #ffffff;
+  color: var(--color-brand-espresso);
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+html.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: #ffffff;
+  color: var(--color-brand-espresso);
+  font-family: var(--font-sans), Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--color-brand-sand);
+  color: var(--color-brand-ivory);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-umber);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

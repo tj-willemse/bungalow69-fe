@@ -1,0 +1,33 @@
+{
+  "name": "bungalow-69-clifton",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "images:webp": "bash scripts/convert-to-webp.sh",
+    "images:check": "bash scripts/check-production-images.sh"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "lenis": "^1.1.16",
+    "lucide-react": "^1.47.0",
+    "next": "16.3.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5.9.0"
+  }
+}

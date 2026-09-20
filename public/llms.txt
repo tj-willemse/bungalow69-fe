@@ -1,0 +1,18 @@
+# Bungalow 69 Clifton
+
+> Official website for Bungalow 69, a private beach villa in Clifton, Cape Town.
+
+- Location: Clifton, Cape Town, South Africa
+- Property: Entire private villa
+- Capacity: Up to 6 guests
+- Accommodation: 4 bedrooms, 5 beds and 3.5 bathrooms
+- Highlights: Private pool, Atlantic Ocean views and direct access to Clifton Fourth Beach
+- Official booking page: https://www.airbnb.co.uk/rooms/45670818
+
+## Website sections
+
+- Rooms & Spaces: /rooms-and-spaces
+- Gallery: /gallery
+- Location: /location
+
+The website is the authoritative source for information about Bungalow 69 Clifton.
