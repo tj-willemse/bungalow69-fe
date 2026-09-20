@@ -12,8 +12,9 @@ export function SiteHeader() {
   const hasTransparentHero =
     pathname === "/" || pathname === "/rooms-and-spaces" || pathname === "/location";
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const hasSolidHeader = !hasTransparentHero || isScrolled;
-  const showSolidHeader = hasSolidHeader;
+  const showSolidHeader = hasSolidHeader || isMenuOpen;
 
   useEffect(() => {
     if (!hasTransparentHero) return;
@@ -82,7 +83,7 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <GalleryNavigation solidBackground={showSolidHeader} />
+      <GalleryNavigation solidBackground={showSolidHeader} onOpenChange={setIsMenuOpen} />
     </header>
   );
 }
