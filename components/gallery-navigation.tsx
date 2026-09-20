@@ -106,18 +106,7 @@ export function GalleryNavigation({
         </nav>
       ) : null}
 
-      <div className="fixed top-5 right-5 z-[60] flex items-center gap-2 sm:top-8 sm:right-8 lg:right-12">
-        <Link
-          href={siteConfig.bookingUrl}
-          className={`inline-flex min-h-11 w-[6.25rem] items-center justify-center rounded-[6px] border border-brand-sand bg-brand-sand px-5 text-[0.62rem] font-bold tracking-[0.2em] text-white uppercase shadow-[0_8px_30px_rgba(52,42,35,0.08)] transition-colors duration-300 ${
-            useSolidButtonHover
-              ? "hover:bg-transparent hover:text-brand-sand"
-              : "hover:bg-transparent hover:text-brand-sand lg:hover:border-white/70 lg:hover:text-white"
-          }`}
-        >
-          Book
-        </Link>
-
+      <div className="fixed top-5 right-5 z-[60] flex items-center gap-2 sm:top-8 sm:right-8 lg:top-12 lg:right-12 lg:-translate-y-1/2">
         <a
           href={siteConfig.sisterVillaUrl}
           target="_blank"
@@ -135,7 +124,7 @@ export function GalleryNavigation({
             width={638}
             height={656}
             unoptimized
-            className="h-8 w-auto shrink-0 object-contain sm:h-9"
+            className="h-12 w-auto shrink-0 object-contain"
           />
           <span className="hidden text-left leading-tight sm:block">
             <span className="block text-[0.43rem] font-bold tracking-[0.12em] uppercase">

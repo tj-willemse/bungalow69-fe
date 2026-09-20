@@ -33,6 +33,7 @@ export const navigationItems = [
   { label: "Rooms & Spaces", href: "/rooms-and-spaces" },
   { label: "Gallery", href: "/gallery" },
   { label: "Location", href: "/location" },
+  { label: "Book", href: "/book" },
 ] as const;
 
 type PageMetadataInput = {

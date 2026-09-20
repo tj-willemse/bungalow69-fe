@@ -9,12 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-    {
-      url: new URL("/book", siteConfig.url).toString(),
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
   ];
 
   return routes.concat(
@@ -24,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: new URL(item.href, siteConfig.url).toString(),
         lastModified: new Date(),
         changeFrequency: "monthly" as const,
-        priority: 0.8,
+        priority: item.href === "/book" ? 0.9 : 0.8,
       })),
   );
 }
