@@ -2,9 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./gallery-scroll-effect.module.css";
 
 const galleryImages = [
@@ -51,8 +48,6 @@ const galleryImages = [
   { src: "/images/gallery/182.webp", width: 1200, height: 675, alt: "Aerial view of Clifton between mountain and sea" },
 ] as const;
 
-const galleryRows = [galleryImages.slice(0, 14), galleryImages.slice(14, 28), galleryImages.slice(28)];
-
 export function GalleryScrollEffect() {
   const rootRef = useRef<HTMLElement>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
@@ -84,87 +79,6 @@ export function GalleryScrollEffect() {
     };
   }, [selectedImageIndex]);
 
-  useEffect(() => {
-    const root = rootRef.current;
-    const desktopMotion = window.matchMedia(
-      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-    );
-    if (!root || !desktopMotion.matches) return;
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const pinHeight = root.querySelector<HTMLElement>(`.${styles.pinHeight}`);
-    const container = root.querySelector<HTMLElement>(`.${styles.container}`);
-    const rows = root.querySelectorAll<HTMLElement>(`.${styles.medias}`);
-    const images = root.querySelectorAll<HTMLImageElement>("img");
-    const lenis = new Lenis({ autoRaf: true });
-    let cancelled = false;
-    let pinTrigger: ScrollTrigger | undefined;
-    let timeline: gsap.core.Timeline | undefined;
-
-    if (!pinHeight || !container) {
-      lenis.destroy();
-      return;
-    }
-
-    const imagesReady = Promise.all(
-      Array.from(images).map(
-        (image) =>
-          new Promise<void>((resolve) => {
-            if (image.complete) {
-              resolve();
-              return;
-            }
-
-            image.addEventListener("load", () => resolve(), { once: true });
-            image.addEventListener("error", () => resolve(), { once: true });
-          }),
-      ),
-    );
-
-    void imagesReady.then(() => {
-      if (cancelled) return;
-
-      pinTrigger = ScrollTrigger.create({
-        trigger: pinHeight,
-        start: "top top",
-        end: "bottom bottom",
-        pin: container,
-      });
-
-      timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinHeight,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-        },
-      });
-
-      rows.forEach((row) => {
-        const distance = row.scrollWidth - document.body.clientWidth;
-
-        timeline?.to(
-          row,
-          {
-            x: -distance,
-            ease: "none",
-            duration: 1,
-          },
-          0,
-        );
-      });
-    });
-
-    return () => {
-      cancelled = true;
-      timeline?.scrollTrigger?.kill();
-      timeline?.kill();
-      pinTrigger?.kill();
-      lenis.destroy();
-    };
-  }, []);
-
   return (
     <section ref={rootRef} className={styles.effect} aria-labelledby="gallery-title">
       <h1 id="gallery-title" className="sr-only">
@@ -172,32 +86,26 @@ export function GalleryScrollEffect() {
       </h1>
       <div className={styles.pinHeight}>
         <div className={styles.container}>
-          {galleryRows.map((row, rowIndex) => (
-            <div key={rowIndex} className={styles.medias}>
-              {row.map((image) => {
-                const imageIndex = galleryImages.indexOf(image);
-
-                return (
-                <button
-                  key={image.src}
-                  type="button"
-                  aria-label={`Open full-screen image: ${image.alt}`}
-                  onClick={() => setSelectedImageIndex(imageIndex)}
-                  className={styles.mediaButton}
-                >
-                  <Image
-                    src={image.src}
-                    width={image.width}
-                    height={image.height}
-                    alt={image.alt}
-                    loading="eager"
-                    unoptimized
-                    className={styles.media}
-                  />
-                </button>
-                );
-              })}
-            </div>
+          {galleryImages.map((image, imageIndex) => (
+            <button
+              key={image.src}
+              type="button"
+              aria-label={`Open full-screen image: ${image.alt}`}
+              onClick={() => setSelectedImageIndex(imageIndex)}
+              className={`${styles.mediaButton} ${
+                image.height > image.width ? styles.portrait : ""
+              } ${imageIndex === galleryImages.length - 1 ? styles.closingImage : ""}`}
+            >
+              <Image
+                src={image.src}
+                width={image.width}
+                height={image.height}
+                alt={image.alt}
+                loading={imageIndex < 8 ? "eager" : "lazy"}
+                unoptimized
+                className={styles.media}
+              />
+            </button>
           ))}
         </div>
       </div>

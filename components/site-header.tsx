@@ -5,16 +5,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { GalleryNavigation } from "@/components/gallery-navigation";
-import { siteConfig } from "@/lib/site";
+import { navigationItems, siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const hasTransparentHero =
     pathname === "/" || pathname === "/rooms-and-spaces" || pathname === "/location";
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const hasSolidHeader = !hasTransparentHero || isScrolled;
-  const showSolidHeader = hasSolidHeader || isMenuOpen;
+  const showSolidHeader = hasSolidHeader;
 
   useEffect(() => {
     if (!hasTransparentHero) return;
@@ -29,7 +28,7 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`${hasTransparentHero ? "fixed inset-x-0 top-7" : "sticky top-7"} z-20`}
+      className={`${hasTransparentHero ? "fixed inset-x-0 top-0" : "sticky top-0"} z-20`}
     >
       <span
         aria-hidden="true"
@@ -39,7 +38,7 @@ export function SiteHeader() {
       />
 
       <div className="relative z-10 px-5 sm:px-8 lg:px-12">
-        <div className="mx-auto flex h-22 max-w-[1440px] items-center sm:h-24">
+        <div className="relative mx-auto flex h-22 max-w-[1440px] items-center sm:h-24">
           <Link
             href="/"
             aria-label="Bungalow 69 Clifton home"
@@ -60,10 +59,30 @@ export function SiteHeader() {
               }`}
             />
           </Link>
+
+          <nav
+            aria-label="Primary navigation"
+            className={`absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 text-[0.56rem] font-bold tracking-[0.16em] uppercase lg:flex xl:gap-9 ${
+              showSolidHeader ? "text-brand-espresso" : "text-white drop-shadow-md"
+            }`}
+          >
+            {navigationItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={item.href === pathname ? "page" : undefined}
+                className={`whitespace-nowrap transition-opacity hover:opacity-60 ${
+                  item.href === pathname ? "opacity-60" : ""
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
 
-      <GalleryNavigation solidBackground={showSolidHeader} onOpenChange={setIsMenuOpen} />
+      <GalleryNavigation solidBackground={showSolidHeader} />
     </header>
   );
 }
