@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 
-const fallbackUrl = "http://localhost:3000";
+const fallbackUrl = "https://bungalow69-fe.vercel.app";
+
+function getSiteUrl() {
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (!configuredUrl) return fallbackUrl;
+
+  try {
+    return new URL(configuredUrl).origin;
+  } catch {
+    return fallbackUrl;
+  }
+}
 
 export const siteConfig = {
   name: "Bungalow 69 Clifton",
@@ -8,7 +19,7 @@ export const siteConfig = {
   title: "Bungalow 69 Clifton | Private Beach Villa in Cape Town",
   description:
     "A private four-bedroom beach villa with a pool, panoramic Atlantic views and direct access to Clifton Fourth Beach in Cape Town.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? fallbackUrl,
+  url: getSiteUrl(),
   bookingUrl: "/book",
   sisterVillaUrl: "https://bakovenpalms.com/home",
   sisterVillaLogo: "/images/bakoven-palms-logo.webp",
