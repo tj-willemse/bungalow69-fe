@@ -8,13 +8,18 @@ import { navigationItems, siteConfig } from "@/lib/site";
 
 export function GalleryNavigation({
   solidBackground = false,
+  onOpenChange,
 }: {
   solidBackground?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
 }) {
   const pathname = usePathname();
   const isGalleryPage = pathname === "/gallery";
   const [isGalleryScrolled, setIsGalleryScrolled] = useState(false);
-  const useSolidButtonHover = isGalleryPage ? isGalleryScrolled : solidBackground;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const useSolidButtonHover = isGalleryPage
+    ? isGalleryScrolled || isMobileMenuOpen
+    : solidBackground;
 
   useEffect(() => {
     if (!isGalleryPage) return;
@@ -25,6 +30,26 @@ export function GalleryNavigation({
 
     return () => window.removeEventListener("scroll", updateHeader);
   }, [isGalleryPage]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+        onOpenChange?.(false);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isMobileMenuOpen, onOpenChange]);
 
   return (
     <>
@@ -51,7 +76,9 @@ export function GalleryNavigation({
             height={767}
             unoptimized
             className={`h-16 w-auto object-contain transition-[filter,opacity] duration-300 group-hover:opacity-75 sm:h-[4.5rem] ${
-              isGalleryScrolled ? "" : "lg:brightness-0 lg:invert lg:drop-shadow-md"
+              isGalleryScrolled || isMobileMenuOpen
+                ? ""
+                : "lg:brightness-0 lg:invert lg:drop-shadow-md"
             }`}
           />
         </Link>
@@ -96,7 +123,7 @@ export function GalleryNavigation({
           target="_blank"
           rel="noreferrer"
           aria-label="Visit Bakoven Palms, Camps Bay Villa"
-          className={`inline-flex min-h-11 items-center justify-center gap-2 px-1 transition-opacity duration-300 hover:opacity-70 sm:gap-2.5 ${
+          className={`hidden min-h-11 items-center justify-center gap-2 px-1 transition-opacity duration-300 hover:opacity-70 sm:gap-2.5 lg:inline-flex ${
             useSolidButtonHover
               ? "text-brand-espresso"
               : "text-brand-espresso lg:text-white lg:drop-shadow-md"
@@ -119,6 +146,93 @@ export function GalleryNavigation({
             </span>
           </span>
         </a>
+
+        <button
+          type="button"
+          aria-label={isMobileMenuOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => {
+            const nextOpen = !isMobileMenuOpen;
+            setIsMobileMenuOpen(nextOpen);
+            onOpenChange?.(nextOpen);
+          }}
+          className="relative inline-flex min-h-11 w-[5.5rem] items-center justify-center rounded-[6px] border border-brand-oyster bg-white px-4 text-[0.58rem] font-bold tracking-[0.16em] text-brand-espresso uppercase shadow-[0_8px_30px_rgba(52,42,35,0.08)] transition-colors hover:border-brand-sand hover:text-brand-sand lg:hidden"
+        >
+          <span className={isMobileMenuOpen ? "opacity-0" : "opacity-100"}>Menu</span>
+          <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+            <span
+              className={`absolute h-px w-5 bg-current transition-transform duration-300 ${
+                isMobileMenuOpen ? "rotate-45 scale-x-100" : "scale-x-0"
+              }`}
+            />
+            <span
+              className={`absolute h-px w-5 bg-current transition-transform duration-300 ${
+                isMobileMenuOpen ? "-rotate-45 scale-x-100" : "scale-x-0"
+              }`}
+            />
+          </span>
+        </button>
+      </div>
+
+      <div
+        id="mobile-navigation"
+        aria-hidden={!isMobileMenuOpen}
+        inert={!isMobileMenuOpen}
+        className={`fixed inset-x-0 top-22 bottom-0 z-50 bg-white px-5 transition-[opacity,transform] duration-200 sm:top-24 sm:px-8 lg:hidden ${
+          isMobileMenuOpen
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-2 opacity-0"
+        }`}
+      >
+        <div className="flex h-full flex-col">
+          <nav aria-label="Mobile navigation" className="flex flex-col pt-5">
+            {navigationItems.map((item, index) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={item.href === pathname ? "page" : undefined}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onOpenChange?.(false);
+                }}
+                className={`flex items-baseline justify-between border-b border-brand-oyster py-4 font-display text-[clamp(2.2rem,9vw,4rem)] leading-none transition-colors hover:text-brand-sand ${
+                  item.href === pathname ? "text-brand-sand" : "text-brand-espresso"
+                }`}
+              >
+                <span>{item.label}</span>
+                <span className="font-sans text-[0.54rem] font-bold tracking-[0.16em] text-brand-sand">
+                  0{index + 1}
+                </span>
+              </Link>
+            ))}
+          </nav>
+
+          <a
+            href={siteConfig.sisterVillaUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Visit Bakoven Palms, Camps Bay Villa"
+            className="mt-auto -mx-5 flex min-h-20 w-[calc(100%+2.5rem)] items-center justify-center gap-3 bg-brand-sand px-5 py-4 text-white transition-colors hover:bg-brand-umber sm:-mx-8 sm:w-[calc(100%+4rem)]"
+          >
+            <Image
+              src={siteConfig.sisterVillaLogo}
+              alt=""
+              width={638}
+              height={656}
+              unoptimized
+              className="h-11 w-auto object-contain"
+            />
+            <span className="leading-tight">
+              <span className="block text-[0.56rem] font-bold tracking-[0.16em] uppercase">
+                Bakoven Palms
+              </span>
+              <span className="mt-1 block text-[0.48rem] font-semibold tracking-[0.13em] uppercase opacity-75">
+                Camps Bay Villa
+              </span>
+            </span>
+          </a>
+        </div>
       </div>
     </>
   );
