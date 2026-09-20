@@ -40,8 +40,12 @@ export function GalleryNavigation({
 
   return (
     <>
+      {isGalleryPage ? (
+        <div className="fixed inset-x-0 top-0 z-50 h-22 bg-white sm:h-24 lg:hidden" />
+      ) : null}
+
       {isGalleryPage && isOpen ? (
-        <div className="fixed inset-x-0 top-0 z-50 h-22 bg-white sm:h-24" />
+        <div className="fixed inset-x-0 top-0 z-50 hidden h-22 bg-white sm:h-24 lg:block" />
       ) : null}
 
       {isGalleryPage ? (
@@ -57,7 +61,7 @@ export function GalleryNavigation({
             height={767}
             unoptimized
             className={`h-16 w-auto object-contain transition-[filter,opacity] duration-300 group-hover:opacity-75 sm:h-[4.5rem] ${
-              isOpen ? "" : "brightness-0 invert drop-shadow-md"
+              isOpen ? "" : "lg:brightness-0 lg:invert lg:drop-shadow-md"
             }`}
           />
         </Link>
@@ -73,7 +77,7 @@ export function GalleryNavigation({
           className={`inline-flex min-h-11 w-[6.25rem] items-center justify-center rounded-[6px] border border-brand-sand bg-brand-sand px-5 text-[0.62rem] font-bold tracking-[0.2em] text-white uppercase shadow-[0_8px_30px_rgba(52,42,35,0.08)] transition-colors duration-300 ${
             useSolidButtonHover
               ? "hover:bg-transparent hover:text-brand-sand"
-              : "hover:border-white/70 hover:bg-transparent hover:text-white"
+              : "hover:bg-transparent hover:text-brand-sand lg:hover:border-white/70 lg:hover:text-white"
           }`}
         >
           Book
@@ -92,7 +96,7 @@ export function GalleryNavigation({
           className={`relative inline-flex min-h-11 w-[6.25rem] cursor-pointer items-center justify-center rounded-[6px] border bg-white px-5 text-[0.62rem] font-bold tracking-[0.2em] text-brand-espresso uppercase shadow-[0_8px_30px_rgba(52,42,35,0.08)] transition-colors duration-300 ${
             useSolidButtonHover
               ? "border-brand-oyster hover:border-brand-sand hover:bg-transparent hover:text-brand-sand"
-              : "border-white hover:border-white/70 hover:bg-transparent hover:text-white"
+              : "border-brand-oyster hover:border-brand-sand hover:bg-transparent hover:text-brand-sand lg:border-white lg:hover:border-white/70 lg:hover:text-white"
           }`}
         >
           <span
