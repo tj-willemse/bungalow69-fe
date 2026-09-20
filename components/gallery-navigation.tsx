@@ -41,18 +41,18 @@ export function GalleryNavigation({
   return (
     <>
       {isGalleryPage ? (
-        <div className="fixed inset-x-0 top-0 z-50 h-22 bg-white sm:h-24 lg:hidden" />
+        <div className="fixed inset-x-0 top-7 z-50 h-22 bg-white sm:h-24 lg:hidden" />
       ) : null}
 
       {isGalleryPage && isOpen ? (
-        <div className="fixed inset-x-0 top-0 z-50 hidden h-22 bg-white sm:h-24 lg:block" />
+        <div className="fixed inset-x-0 top-7 z-50 hidden h-22 bg-white sm:h-24 lg:block" />
       ) : null}
 
       {isGalleryPage ? (
         <Link
           href="/"
           aria-label="Bungalow 69 Clifton home"
-          className="group fixed top-3 left-5 z-[60] inline-flex items-center sm:left-8 lg:left-12"
+          className="group fixed top-10 left-5 z-[60] inline-flex items-center sm:left-8 lg:left-12"
         >
           <Image
             src={siteConfig.logoImage}
@@ -67,7 +67,7 @@ export function GalleryNavigation({
         </Link>
       ) : null}
 
-      <div className="fixed top-5 right-5 z-[60] flex items-center gap-2 sm:top-8 sm:right-8 lg:right-12">
+      <div className="fixed top-12 right-5 z-[60] flex items-center gap-2 sm:top-15 sm:right-8 lg:right-12">
         <Link
           href={siteConfig.bookingUrl}
           onClick={() => {
@@ -125,7 +125,7 @@ export function GalleryNavigation({
         id="gallery-navigation"
         aria-hidden={!isOpen}
         inert={!isOpen}
-        className={`fixed inset-x-0 top-22 bottom-0 z-50 bg-white transition-[opacity,transform] duration-200 ease-out sm:top-24 ${
+        className={`fixed inset-x-0 top-[7.25rem] bottom-0 z-50 bg-white transition-[opacity,transform] duration-200 ease-out sm:top-[7.75rem] ${
           isOpen ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"
         }`}
       >
@@ -157,30 +157,6 @@ export function GalleryNavigation({
                 ))}
               </nav>
 
-              <a
-                href={siteConfig.sisterVillaUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Visit Bakoven Palms, our Camps Bay villa"
-                className="mt-auto flex w-fit items-center gap-3 border-t border-brand-oyster pt-4 text-brand-espresso transition-colors hover:text-brand-sand"
-              >
-                <Image
-                  src={siteConfig.sisterVillaLogo}
-                  alt=""
-                  width={638}
-                  height={656}
-                  unoptimized
-                  className="h-10 w-auto object-contain"
-                />
-                <span>
-                  <span className="block text-[0.52rem] font-bold tracking-[0.18em] text-brand-sand uppercase">
-                    Camps Bay Villa
-                  </span>
-                  <span className="mt-1 block font-display text-xl leading-none">
-                    Bakoven Palms
-                  </span>
-                </span>
-              </a>
             </div>
 
             <figure className="group relative my-6 hidden min-h-0 overflow-hidden rounded-[6px] bg-brand-cream md:block">

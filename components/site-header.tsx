@@ -29,7 +29,7 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`${hasTransparentHero ? "fixed inset-x-0 top-0" : "sticky top-0"} z-20`}
+      className={`${hasTransparentHero ? "fixed inset-x-0 top-7" : "sticky top-7"} z-20`}
     >
       <span
         aria-hidden="true"

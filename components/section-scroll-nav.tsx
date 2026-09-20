@@ -60,7 +60,7 @@ export function SectionScrollNav({ links, label }: { links: readonly SectionLink
     <nav
       ref={navRef}
       aria-label={label}
-      className="sticky top-22 z-[15] bg-white/95 backdrop-blur-sm sm:top-24"
+      className="sticky top-[7.25rem] z-[15] bg-white/95 backdrop-blur-sm sm:top-[7.75rem]"
     >
       <div className="mx-auto flex max-w-[1440px] gap-7 overflow-x-auto px-5 py-4 [scrollbar-width:none] sm:px-8 md:justify-center lg:px-12 [&::-webkit-scrollbar]:hidden">
         {links.map((link, index) => (
