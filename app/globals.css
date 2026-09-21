@@ -84,7 +84,7 @@ a {
   background-size: 300% 100%;
   background-clip: text;
   -webkit-background-clip: text;
-  animation: hero-title-shimmer 5s linear infinite;
+  animation: hero-title-shimmer 10s linear infinite;
   will-change: background-position;
   transform: translateZ(0);
 }
