@@ -22,7 +22,7 @@ export const siteConfig = {
   url: getSiteUrl(),
   bookingUrl: "/book",
   sisterVillaUrl: "https://bakovenpalms.com/home",
-  sisterVillaLogo: "/images/bakoven-palms-logo.webp",
+  sisterVillaLogo: "/images/bp-logo.svg",
   location: "Clifton, Cape Town, South Africa",
   heroImage: "/images/clifton-fourth-beach-hero.webp",
   logoImage: "/images/bungalow-69-logo.svg",

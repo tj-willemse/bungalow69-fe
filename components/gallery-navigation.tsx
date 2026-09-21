@@ -75,7 +75,7 @@ export function GalleryNavigation({
             width={1172}
             height={767}
             unoptimized
-            className={`h-16 w-auto object-contain transition-[filter,opacity] duration-300 group-hover:opacity-75 sm:h-20 ${
+            className={`h-16 w-auto object-contain transition-[filter,opacity] duration-300 group-hover:opacity-75 ${
               isGalleryScrolled || isMobileMenuOpen
                 ? ""
                 : "lg:brightness-0 lg:invert lg:drop-shadow-md"
@@ -87,7 +87,7 @@ export function GalleryNavigation({
       {isGalleryPage ? (
         <nav
           aria-label="Primary navigation"
-          className={`fixed top-[2.8rem] left-1/2 z-[60] hidden -translate-x-1/2 items-center gap-7 text-[0.56rem] font-bold tracking-[0.16em] uppercase transition-colors duration-300 lg:flex xl:gap-9 ${
+          className={`fixed top-[2.55rem] left-1/2 z-[60] hidden -translate-x-1/2 items-center gap-7 text-[0.56rem] font-bold tracking-[0.16em] uppercase transition-colors duration-300 lg:flex xl:gap-9 ${
             isGalleryScrolled ? "text-brand-espresso" : "text-white drop-shadow-md"
           }`}
         >
@@ -106,7 +106,7 @@ export function GalleryNavigation({
         </nav>
       ) : null}
 
-      <div className="fixed top-5 right-5 z-[60] flex items-center gap-2 sm:top-8 sm:right-8 lg:top-3 lg:right-12">
+      <div className="fixed top-5 right-5 z-[60] flex items-center gap-2 sm:top-8 sm:right-8 lg:top-12 lg:right-12 lg:-translate-y-1/2">
         <a
           href={siteConfig.sisterVillaUrl}
           target="_blank"
@@ -121,10 +121,10 @@ export function GalleryNavigation({
           <Image
             src={siteConfig.sisterVillaLogo}
             alt=""
-            width={638}
-            height={656}
+            width={747}
+            height={767}
             unoptimized
-            className="h-20 w-auto shrink-0 object-contain"
+            className="h-16 w-auto shrink-0 object-contain"
           />
           <span className="hidden text-left leading-tight sm:block">
             <span className="block text-[0.5rem] font-bold tracking-[0.13em] uppercase">
@@ -207,8 +207,8 @@ export function GalleryNavigation({
             <Image
               src={siteConfig.sisterVillaLogo}
               alt=""
-              width={638}
-              height={656}
+            width={747}
+            height={767}
               unoptimized
               className="h-11 w-auto object-contain"
             />

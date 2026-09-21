@@ -39,7 +39,7 @@ export function SiteHeader() {
       />
 
       <div className="relative z-10 px-5 sm:px-8 lg:px-12">
-        <div className="relative mx-auto flex h-22 max-w-[1440px] items-center sm:h-24 lg:translate-y-1">
+        <div className="relative mx-auto flex h-22 max-w-[1440px] items-center sm:h-24">
           <Link
             href="/"
             aria-label="Bungalow 69 Clifton home"
@@ -53,7 +53,7 @@ export function SiteHeader() {
               preload
               unoptimized
               sizes="(min-width: 640px) 110px, 98px"
-              className={`h-16 w-auto object-contain transition-[filter,opacity] duration-300 sm:h-20 ${
+              className={`h-16 w-auto object-contain transition-[filter,opacity] duration-300 ${
                 showSolidHeader
                   ? "group-hover:opacity-75"
                   : "brightness-0 invert drop-shadow-md group-hover:opacity-75"
