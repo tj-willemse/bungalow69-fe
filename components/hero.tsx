@@ -19,7 +19,7 @@ export function Hero() {
         <div>
           <h1
             id="hero-title"
-            className="font-display text-[clamp(4rem,9vw,8rem)] leading-none font-medium tracking-[-0.045em] text-white drop-shadow-lg"
+            className="hero-title-shimmer font-display text-[clamp(4rem,9vw,8rem)] leading-none font-medium tracking-[-0.045em] drop-shadow-lg"
           >
             Bungalow 69
           </h1>
