@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { navigationItems, siteConfig } from "@/lib/site";
+import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes: MetadataRoute.Sitemap = [
+  return [
     {
       url: siteConfig.url,
       lastModified: new Date(),
@@ -10,15 +10,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
   ];
-
-  return routes.concat(
-    navigationItems
-      .filter((item) => item.href !== "/")
-      .map((item) => ({
-        url: new URL(item.href, siteConfig.url).toString(),
-        lastModified: new Date(),
-        changeFrequency: "monthly" as const,
-        priority: item.href === "/book" ? 0.9 : 0.8,
-      })),
-  );
 }
