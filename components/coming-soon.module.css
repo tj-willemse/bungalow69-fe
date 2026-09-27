@@ -59,6 +59,10 @@
   letter-spacing: -0.055em;
 }
 
+.comingTitle {
+  color: var(--color-brand-espresso);
+}
+
 .description {
   max-width: 31rem;
   margin: 0;
@@ -192,6 +196,25 @@
     color: white;
   }
 
+  .comingTitle {
+    color: transparent;
+    background-image: linear-gradient(
+      110deg,
+      #ffffff 0%,
+      #ffffff 38%,
+      var(--color-brand-sand) 48%,
+      var(--color-brand-cream) 54%,
+      #ffffff 64%,
+      #ffffff 100%
+    );
+    background-position: 150% 50%;
+    background-size: 300% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: logo-shimmer 10s linear infinite;
+    will-change: background-position;
+  }
+
   .description {
     margin-inline: auto;
   }
@@ -219,5 +242,11 @@
   .logoShimmer {
     animation: none;
     background: var(--color-brand-sand);
+  }
+
+  .comingTitle {
+    color: white;
+    background: none;
+    animation: none;
   }
 }

@@ -62,7 +62,7 @@ export function ComingSoon() {
 
         <div className={styles.copy}>
           <p className={styles.eyebrow}>Clifton Fourth Beach · Cape Town</p>
-          <h1 id="coming-soon-title" className="hero-title-shimmer">
+          <h1 id="coming-soon-title" className={styles.comingTitle}>
             Coming soon.
           </h1>
           <p className={styles.description}>
