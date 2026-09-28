@@ -6,8 +6,9 @@
 - General and administrative enquiries: `administration@clifton69.com`
 - The future booking-enquiry form must route to the reservations address.
 - General website enquiries must route to the administration address.
-- Reservation mail must also be linked or forwarded to the Steadfast email, following the same arrangement used for Bakoven Palms. The exact Steadfast destination address still needs to be confirmed before implementation.
+- Reservation mail must also copy the Steadfast email through `BOOKING_EMAIL_CC`, following the same arrangement used for Bakoven Palms. The exact Steadfast destination address still needs to be confirmed.
 - The internal `/book` form sends through the server-side `/api/book` route. Production requires `RESEND_API_KEY` and `BOOKING_EMAIL_FROM`; `BOOKING_EMAIL_TO` may override the default reservations inbox.
+- General enquiry forms send through `/api/contact` to `GENERAL_EMAIL_TO`, which defaults to the administration inbox. `GENERAL_EMAIL_FROM` may use a separate verified sender and otherwise falls back to `BOOKING_EMAIL_FROM`.
 
 These addresses are internal implementation requirements and should not be displayed publicly unless explicitly requested.
 

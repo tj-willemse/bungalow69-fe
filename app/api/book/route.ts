@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 
 const bookingRecipient = process.env.BOOKING_EMAIL_TO ?? "reservations@clifton69.com";
+const bookingCcRecipients = (process.env.BOOKING_EMAIL_CC ?? "")
+  .split(",")
+  .map((email) => email.trim())
+  .filter(Boolean);
 
 const escapeHtml = (value: string) =>
   value
@@ -70,6 +74,7 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       from: bookingSender,
       to: [bookingRecipient],
+      ...(bookingCcRecipients.length ? { cc: bookingCcRecipients } : {}),
       reply_to: email,
       subject: `Booking request: ${arrival} to ${departure}`,
       html: `
