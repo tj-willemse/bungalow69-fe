@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useState } from "react";
 import { earliestBookingDate } from "@/lib/booking-availability";
 
@@ -76,6 +76,11 @@ export function BookingForm() {
     );
   }
 
+  function closeSuccessMessage() {
+    setSubmissionState("idle");
+    setResponseMessage("");
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!arrival || !departure) {
@@ -113,7 +118,8 @@ export function BookingForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-6" aria-label="Booking request form">
+    <>
+      <form onSubmit={handleSubmit} className="grid gap-6" aria-label="Booking request form">
       <div className="hidden" aria-hidden="true">
         <label htmlFor="company">Company</label>
         <input id="company" name="company" tabIndex={-1} autoComplete="off" />
@@ -279,16 +285,69 @@ export function BookingForm() {
         {submissionState === "submitting" ? "Sending enquiry…" : "Send booking enquiry"}
       </button>
 
-      {responseMessage ? (
+      {responseMessage && submissionState !== "success" ? (
         <p
           role="status"
-          className={`text-sm leading-6 ${
-            submissionState === "success" ? "text-brand-umber" : "text-red-700"
-          }`}
+          className="text-sm leading-6 text-red-700"
         >
           {responseMessage}
         </p>
       ) : null}
-    </form>
+      </form>
+
+      {submissionState === "success" ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-espresso/55 px-5 py-8 backdrop-blur-[3px]"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) closeSuccessMessage();
+          }}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="booking-success-title"
+            aria-describedby="booking-success-description"
+            className="relative w-full max-w-lg rounded-[6px] border border-brand-oyster bg-brand-ivory px-7 py-10 text-center shadow-2xl sm:px-12 sm:py-12"
+          >
+            <button
+              type="button"
+              onClick={closeSuccessMessage}
+              aria-label="Close confirmation"
+              className="absolute top-4 right-4 flex size-10 cursor-pointer items-center justify-center rounded-full text-brand-espresso/60 transition-colors hover:bg-brand-cream hover:text-brand-espresso"
+            >
+              <X aria-hidden="true" className="size-5" />
+            </button>
+
+            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-sand text-white">
+              <Check aria-hidden="true" className="size-7" strokeWidth={1.8} />
+            </div>
+            <p className="mt-6 text-[0.6rem] font-bold tracking-[0.2em] text-brand-umber uppercase">
+              Bungalow 69 Clifton
+            </p>
+            <h2
+              id="booking-success-title"
+              className="mt-3 font-display text-[clamp(2.75rem,7vw,4.5rem)] leading-none font-medium tracking-[-0.045em] text-brand-espresso"
+            >
+              Enquiry sent
+            </h2>
+            <p
+              id="booking-success-description"
+              className="mx-auto mt-5 max-w-sm text-sm leading-6 text-brand-espresso/65"
+            >
+              Thank you for your enquiry. Our reservations team will review your preferred dates
+              and respond shortly.
+            </p>
+            <button
+              type="button"
+              onClick={closeSuccessMessage}
+              className="mt-8 inline-flex min-h-12 cursor-pointer items-center justify-center rounded-[6px] bg-brand-sand px-10 text-[0.62rem] font-bold tracking-[0.18em] text-white uppercase transition-colors hover:bg-brand-umber"
+            >
+              Close
+            </button>
+          </section>
+        </div>
+      ) : null}
+    </>
   );
 }
