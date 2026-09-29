@@ -106,7 +106,7 @@ export function GalleryNavigation({
         </nav>
       ) : null}
 
-      <div className="fixed top-5 right-5 z-[60] flex items-center gap-2 sm:top-8 sm:right-8 lg:top-12 lg:right-12 lg:-translate-y-1/2">
+      <div className="fixed top-5 right-5 z-[60] flex items-center gap-2 sm:top-8 sm:right-8 lg:top-12 lg:right-[max(3rem,calc((100vw-1440px)/2))] lg:-translate-y-1/2">
         <a
           href={siteConfig.sisterVillaUrl}
           target="_blank"
