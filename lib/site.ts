@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const fallbackUrl = "https://bungalow69-fe.vercel.app";
+const fallbackUrl = "https://www.clifton69.com";
 
 function getSiteUrl() {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
