@@ -69,7 +69,7 @@ export default function RoomsAndSpacesPage() {
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,14,10,0.22)_0%,rgba(20,14,10,0.36)_100%)]" />
         <div className="relative z-10">
-          <h1 className="font-display text-[clamp(4rem,8vw,7.5rem)] leading-[0.88] font-medium tracking-[-0.055em] text-white drop-shadow-md">
+          <h1 className="hero-title-shimmer font-display text-[clamp(4rem,8vw,7.5rem)] leading-[0.88] font-medium tracking-[-0.055em] drop-shadow-md">
             Rooms & Spaces
           </h1>
         </div>

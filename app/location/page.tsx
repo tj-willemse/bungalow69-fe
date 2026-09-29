@@ -32,7 +32,7 @@ export default function LocationPage() {
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,14,10,0.2)_0%,rgba(20,14,10,0.34)_100%)]" />
-        <h1 className="relative z-10 font-display text-[clamp(4rem,8vw,7.5rem)] leading-[0.88] font-medium tracking-[-0.055em] text-white drop-shadow-md">
+        <h1 className="hero-title-shimmer relative z-10 font-display text-[clamp(4rem,8vw,7.5rem)] leading-[0.88] font-medium tracking-[-0.055em] drop-shadow-md">
           Clifton 4th Beach
         </h1>
       </section>
