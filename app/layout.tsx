@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { SiteChrome } from "@/components/site-chrome";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -83,7 +84,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-ZA" className={`${displayFont.variable} ${sansFont.variable}`}>
-      <body>{children}</body>
+      <body>
+        <SiteChrome>{children}</SiteChrome>
+      </body>
     </html>
   );
 }
