@@ -216,7 +216,8 @@ export function BookingForm() {
           })}
         </div>
         <p className="mt-4 text-xs leading-5 text-brand-espresso/55">
-          Select an arrival date, then choose your departure date. Availability will be connected to Airbnb later.
+          Select your preferred arrival and departure dates. All dates are subject to
+          availability and will be confirmed by our reservations team.
         </p>
       </section>
 
@@ -257,7 +258,7 @@ export function BookingForm() {
         disabled={submissionState === "submitting"}
         className="inline-flex min-h-13 cursor-pointer items-center justify-center rounded-[6px] border border-brand-sand bg-brand-sand px-8 text-[0.65rem] font-bold tracking-[0.2em] text-white uppercase transition-colors hover:bg-transparent hover:text-brand-sand disabled:cursor-wait disabled:opacity-55"
       >
-        {submissionState === "submitting" ? "Sending request…" : "Request to book"}
+        {submissionState === "submitting" ? "Sending enquiry…" : "Send booking enquiry"}
       </button>
 
       {responseMessage ? (

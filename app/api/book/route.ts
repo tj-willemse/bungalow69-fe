@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 
 const bookingRecipient = process.env.BOOKING_EMAIL_TO ?? "reservations@clifton69.com";
-const bookingCcRecipients = (process.env.BOOKING_EMAIL_CC ?? "")
+const bookingCcRecipients = (
+  process.env.BOOKING_EMAIL_CC?.trim() || "collection@steadfast.africa"
+)
   .split(",")
   .map((email) => email.trim())
   .filter(Boolean);
