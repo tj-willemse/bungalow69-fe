@@ -19,7 +19,7 @@ const amenityEssentials: ReadonlyArray<{ label: string; icon: LucideIcon }> = [
   { label: "Heated pool", icon: Waves },
   { label: "Direct beach access", icon: Footprints },
   { label: "High-speed Wi-Fi", icon: Wifi },
-  { label: "Air conditioning", icon: AirVent },
+  { label: "Air conditioning in main bedroom", icon: AirVent },
   { label: "Indoor fireplace", icon: Flame },
   { label: "Fully equipped kitchen", icon: CookingPot },
   { label: "Laundry facilities", icon: WashingMachine },
@@ -77,9 +77,9 @@ const signatureAmenities = [
     imageAlt: "Fully equipped kitchen and breakfast counter",
   },
   {
-    title: "Comfort throughout",
+    title: "Comfort & convenience",
     description:
-      "Air conditioning, ceiling fans, heating, Wi-Fi, laundry facilities and cleaning available during the stay.",
+      "Air conditioning in the main bedroom, ceiling fans, heating, Wi-Fi, laundry facilities and cleaning available during the stay.",
     image: "/images/gallery/163.webp",
     imageAlt: "Bright open-plan interior at Bungalow 69",
   },

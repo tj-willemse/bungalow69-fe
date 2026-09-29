@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { earliestBookingDate } from "@/lib/booking-availability";
 
 const bookingRecipient = process.env.BOOKING_EMAIL_TO ?? "reservations@clifton69.com";
 const bookingCcRecipients = (
@@ -54,6 +55,17 @@ export async function POST(request: Request) {
 
   if (!arrival || !departure || !adults || !name || !email) {
     return NextResponse.json({ message: "Please complete all required fields." }, { status: 400 });
+  }
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(arrival) || !/^\d{4}-\d{2}-\d{2}$/.test(departure)) {
+    return NextResponse.json({ message: "Please enter valid booking dates." }, { status: 400 });
+  }
+
+  if (arrival < earliestBookingDate || departure < earliestBookingDate) {
+    return NextResponse.json(
+      { message: "Bookings are available from 14 November 2026." },
+      { status: 400 },
+    );
   }
 
   if (departure <= arrival) {

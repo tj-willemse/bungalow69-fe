@@ -2,6 +2,7 @@
 
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { earliestBookingDate } from "@/lib/booking-availability";
 
 type SubmissionState = "idle" | "submitting" | "success" | "error";
 
@@ -44,7 +45,9 @@ export function BookingForm() {
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [responseMessage, setResponseMessage] = useState("");
   const [visibleMonth, setVisibleMonth] = useState(() => {
-    const date = new Date();
+    const today = new Date();
+    const firstAvailableDate = new Date(`${earliestBookingDate}T00:00:00`);
+    const date = today > firstAvailableDate ? today : firstAvailableDate;
     return new Date(date.getFullYear(), date.getMonth(), 1);
   });
   const [arrival, setArrival] = useState("");
@@ -52,6 +55,7 @@ export function BookingForm() {
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  const firstAvailableDate = new Date(`${earliestBookingDate}T00:00:00`);
   const calendarDays = getCalendarDays(visibleMonth);
 
   function selectDate(date: Date) {
@@ -202,7 +206,7 @@ export function BookingForm() {
           {calendarDays.map((date) => {
             const value = toDateValue(date);
             const outsideMonth = date.getMonth() !== visibleMonth.getMonth();
-            const unavailable = date < today;
+            const unavailable = date < today || date < firstAvailableDate;
             const selected = value === arrival || value === departure;
             const inRange = Boolean(arrival && departure && value > arrival && value < departure);
 
@@ -230,8 +234,8 @@ export function BookingForm() {
           })}
         </div>
         <p className="mt-4 text-xs leading-5 text-brand-espresso/55">
-          Select your preferred arrival and departure dates. All dates are subject to
-          availability and will be confirmed by our reservations team.
+          Bookings are available from 14 November 2026. Select your preferred arrival and
+          departure dates; all dates are subject to confirmation by our reservations team.
         </p>
       </section>
 
