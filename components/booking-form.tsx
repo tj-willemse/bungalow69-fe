@@ -1,12 +1,14 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 type SubmissionState = "idle" | "submitting" | "success" | "error";
 
 const fieldClassName =
   "mt-2 min-h-12 w-full rounded-[6px] border border-brand-oyster bg-white px-4 text-sm text-brand-espresso outline-none transition-colors placeholder:text-brand-espresso/35 focus:border-brand-sand";
+
+const selectClassName = `${fieldClassName} appearance-none pr-12`;
 
 const weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
@@ -134,23 +136,35 @@ export function BookingForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="text-[0.62rem] font-bold tracking-[0.16em] text-brand-umber uppercase">
           Adults
-          <select required name="adults" defaultValue="2" className={fieldClassName}>
-            {[1, 2, 3, 4, 5, 6].map((count) => (
-              <option key={count} value={count}>
-                {count}
-              </option>
-            ))}
-          </select>
+          <span className="relative block">
+            <select required name="adults" defaultValue="2" className={selectClassName}>
+              {[1, 2, 3, 4, 5, 6].map((count) => (
+                <option key={count} value={count}>
+                  {count}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none absolute top-[calc(50%+0.25rem)] right-4 size-4 -translate-y-1/2 text-brand-espresso"
+            />
+          </span>
         </label>
         <label className="text-[0.62rem] font-bold tracking-[0.16em] text-brand-umber uppercase">
           Children
-          <select name="children" defaultValue="0" className={fieldClassName}>
-            {[0, 1, 2].map((count) => (
-              <option key={count} value={count}>
-                {count}
-              </option>
-            ))}
-          </select>
+          <span className="relative block">
+            <select name="children" defaultValue="0" className={selectClassName}>
+              {[0, 1, 2].map((count) => (
+                <option key={count} value={count}>
+                  {count}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none absolute top-[calc(50%+0.25rem)] right-4 size-4 -translate-y-1/2 text-brand-espresso"
+            />
+          </span>
         </label>
       </div>
 
