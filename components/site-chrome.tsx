@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { FloatingContact } from "@/components/floating-contact";
 import { GalleryNavigation } from "@/components/gallery-navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -14,6 +15,7 @@ export function SiteChrome({ children }: Readonly<{ children: React.ReactNode }>
       {!isGallery ? <SiteHeader /> : <GalleryNavigation />}
       {children}
       <SiteFooter />
+      <FloatingContact />
     </>
   );
 }

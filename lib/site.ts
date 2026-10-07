@@ -21,6 +21,10 @@ export const siteConfig = {
     "A private four-bedroom beach villa with a pool, panoramic Atlantic views and direct access to Clifton Fourth Beach in Cape Town.",
   url: getSiteUrl(),
   bookingUrl: "/book",
+  contactEmail: "administration@clifton69.com",
+  instagramUrl: "https://www.instagram.com/bungalow69clifton/",
+  whatsappUrl:
+    "https://api.whatsapp.com/send/?phone=27647660156&text&type=phone_number&app_absent=0",
   sisterVillaUrl: "https://bakovenpalms.com/home",
   sisterVillaLogo: "/images/bp-logo.svg",
   location: "Clifton, Cape Town, South Africa",
