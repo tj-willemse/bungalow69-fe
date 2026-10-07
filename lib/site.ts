@@ -22,7 +22,7 @@ export const siteConfig = {
   url: getSiteUrl(),
   bookingUrl: "/book",
   contactEmail: "administration@clifton69.com",
-  instagramUrl: "https://www.instagram.com/bungalow69clifton/",
+  instagramUrl: "https://www.instagram.com/cliftonbungalow69/",
   whatsappUrl:
     "https://api.whatsapp.com/send/?phone=27647660156&text&type=phone_number&app_absent=0",
   sisterVillaUrl: "https://bakovenpalms.com/home",
