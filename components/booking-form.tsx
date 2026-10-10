@@ -296,13 +296,6 @@ export function BookingForm() {
             );
           })}
         </div>
-        <p className="mt-4 text-xs leading-5 text-brand-espresso/55">
-          {availabilityState === "loading"
-            ? "Checking live Airbnb availability…"
-            : availabilityState === "error"
-              ? "Live availability is temporarily unavailable. Please refresh and try again shortly."
-              : "Live availability is synced with Airbnb. Bookings are available from 14 November 2026; all dates remain subject to confirmation by our reservations team."}
-        </p>
       </section>
 
       <label className="text-[0.62rem] font-bold tracking-[0.16em] text-brand-umber uppercase">
