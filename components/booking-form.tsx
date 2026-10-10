@@ -1,10 +1,16 @@
 "use client";
 
 import { Check, ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useState } from "react";
-import { earliestBookingDate } from "@/lib/booking-availability";
+import { useEffect, useState } from "react";
+import {
+  dateIsBlocked,
+  earliestBookingDate,
+  stayOverlapsBlockedRange,
+  type BlockedDateRange,
+} from "@/lib/booking-availability";
 
 type SubmissionState = "idle" | "submitting" | "success" | "error";
+type AvailabilityState = "loading" | "ready" | "error";
 
 const fieldClassName =
   "mt-2 min-h-12 w-full rounded-[6px] border border-brand-oyster bg-white px-4 text-sm text-brand-espresso outline-none transition-colors placeholder:text-brand-espresso/35 focus:border-brand-sand";
@@ -43,6 +49,8 @@ function getCalendarDays(month: Date) {
 
 export function BookingForm() {
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
+  const [availabilityState, setAvailabilityState] = useState<AvailabilityState>("loading");
+  const [blockedRanges, setBlockedRanges] = useState<BlockedDateRange[]>([]);
   const [responseMessage, setResponseMessage] = useState("");
   const [visibleMonth, setVisibleMonth] = useState(() => {
     const today = new Date();
@@ -58,16 +66,54 @@ export function BookingForm() {
   const firstAvailableDate = new Date(`${earliestBookingDate}T00:00:00`);
   const calendarDays = getCalendarDays(visibleMonth);
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadAvailability() {
+      try {
+        const response = await fetch("/api/availability", {
+          cache: "no-store",
+          signal: controller.signal,
+        });
+        const result = (await response.json()) as {
+          blockedRanges?: BlockedDateRange[];
+          message?: string;
+        };
+        if (!response.ok || !Array.isArray(result.blockedRanges)) {
+          throw new Error(result.message || "Unable to load availability.");
+        }
+        setBlockedRanges(result.blockedRanges);
+        setAvailabilityState("ready");
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setAvailabilityState("error");
+      }
+    }
+
+    void loadAvailability();
+    return () => controller.abort();
+  }, []);
+
   function selectDate(date: Date) {
     const value = toDateValue(date);
 
     if (!arrival || departure || value <= arrival) {
       setArrival(value);
       setDeparture("");
+      setSubmissionState("idle");
+      setResponseMessage("");
+      return;
+    }
+
+    if (stayOverlapsBlockedRange(arrival, value, blockedRanges)) {
+      setSubmissionState("error");
+      setResponseMessage("Those dates include unavailable nights. Please choose another stay.");
       return;
     }
 
     setDeparture(value);
+    setSubmissionState("idle");
+    setResponseMessage("");
   }
 
   function changeMonth(offset: number) {
@@ -212,7 +258,18 @@ export function BookingForm() {
           {calendarDays.map((date) => {
             const value = toDateValue(date);
             const outsideMonth = date.getMonth() !== visibleMonth.getMonth();
-            const unavailable = date < today || date < firstAvailableDate;
+            const unavailableByDate = date < today || date < firstAvailableDate;
+            const blockedByAirbnb = dateIsBlocked(value, blockedRanges);
+            const validDeparture = Boolean(
+              arrival &&
+                !departure &&
+                value > arrival &&
+                !stayOverlapsBlockedRange(arrival, value, blockedRanges),
+            );
+            const unavailable =
+              availabilityState !== "ready" ||
+              unavailableByDate ||
+              (blockedByAirbnb && !validDeparture);
             const selected = value === arrival || value === departure;
             const inRange = Boolean(arrival && departure && value > arrival && value < departure);
 
@@ -240,8 +297,11 @@ export function BookingForm() {
           })}
         </div>
         <p className="mt-4 text-xs leading-5 text-brand-espresso/55">
-          Bookings are available from 14 November 2026. Select your preferred arrival and
-          departure dates; all dates are subject to confirmation by our reservations team.
+          {availabilityState === "loading"
+            ? "Checking live Airbnb availability…"
+            : availabilityState === "error"
+              ? "Live availability is temporarily unavailable. Please refresh and try again shortly."
+              : "Live availability is synced with Airbnb. Bookings are available from 14 November 2026; all dates remain subject to confirmation by our reservations team."}
         </p>
       </section>
 
@@ -279,7 +339,7 @@ export function BookingForm() {
 
       <button
         type="submit"
-        disabled={submissionState === "submitting"}
+        disabled={submissionState === "submitting" || availabilityState !== "ready"}
         className="inline-flex min-h-13 cursor-pointer items-center justify-center rounded-[6px] border border-brand-sand bg-brand-sand px-8 text-[0.65rem] font-bold tracking-[0.2em] text-white uppercase transition-colors hover:bg-transparent hover:text-brand-sand disabled:cursor-wait disabled:opacity-55"
       >
         {submissionState === "submitting" ? "Sending enquiry…" : "Send booking enquiry"}

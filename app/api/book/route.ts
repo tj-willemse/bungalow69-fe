@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { earliestBookingDate } from "@/lib/booking-availability";
+import { getAirbnbBlockedRanges } from "@/lib/airbnb-availability";
+import { earliestBookingDate, stayOverlapsBlockedRange } from "@/lib/booking-availability";
 
 const bookingRecipient = process.env.BOOKING_EMAIL_TO ?? "reservations@clifton69.com";
 const bookingCcRecipients = (
@@ -77,6 +78,22 @@ export async function POST(request: Request) {
 
   if (!/^\S+@\S+\.\S+$/.test(email)) {
     return NextResponse.json({ message: "Please enter a valid email address." }, { status: 400 });
+  }
+
+  try {
+    const blockedRanges = await getAirbnbBlockedRanges();
+    if (stayOverlapsBlockedRange(arrival, departure, blockedRanges)) {
+      return NextResponse.json(
+        { message: "Those dates are no longer available. Please choose different dates." },
+        { status: 409 },
+      );
+    }
+  } catch (error) {
+    console.error("Unable to verify Airbnb availability", error);
+    return NextResponse.json(
+      { message: "Live availability is temporarily unavailable. Please try again shortly." },
+      { status: 503 },
+    );
   }
 
   const response = await fetch("https://api.resend.com/emails", {
